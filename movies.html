@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #F5C518;
+    }
+
+    .page-title {
+      background-color: #F5C518;
+      color: black;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    select, input[type="text"] {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    select {
+      background-color: #F5C518;
+      color: black;
+    }
+
+    input[type="text"] {
+      background-color: white;
+      color: black;
+    }
+
+    .search-label {
+      background-color: #F5C518;
+      color: black;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .movies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .movie {
+      text-align: center;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .movie:hover {
+      transform: scale(1.05);
+    }
+
+    .movie img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .movie-title {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+
+    a {
+      color: #F5C518;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-title">MOVIES</div>
+
+  <header>
+    <label class="search-label">Search</label>
+    <input type="text" id="searchInput" placeholder="Type movie name...">
+    <select id="genreSelector">
+      <option value="all">All</option>
+      <option value="arabic">Arabic</option>
+      <option value="english">English</option>
+    </select>
+  </header>
+
+  <div class="movies" id="moviesContainer"></div>
+
+  <script>
+    const movies = {
+      arabic: [
+        { title: "El Hareefa", key: "el-hareefa", img: "pictures/WhatsApp Image 2025-04-24 at 22.53.05_0624abf1.jpg" },
+        { title: "Amr & Salma", key: "omar-w-salma", img: "pictures/WhatsApp Image 2025-04-24 at 22.53.05_09f4d348.jpg" },
+        { title: "El Dashash", key: "el-dashash", img: "pictures/WhatsApp Image 2025-04-24 at 22.53.05_2dd97a2c.jpg" },
+        { title: "Bahebak", key: "bahebak", img: "pictures/WhatsApp Image 2025-05-07 at 04.15.28_e55f91e0.jpg" },
+        { title: "Few Hours", key: "few-hours", img: "pictures/WhatsApp Image 2025-04-24 at 22.53.06_67593b05.jpg" },
+        { title: "The Yacoubian Building", key: "yacoubian-building", img: "pictures/WhatsApp Image 2025-05-07 at 04.15.28_de7ae8f8.jpg" },
+        { title: "Terrorism and Kebab", key: "terrorism-and-kebab", img: "pictures/WhatsApp Image 2025-05-07 at 04.15.28_3cd0be0f.jpg" }
+      ],
+      english: [
+        { title: "King Kong", key: "king-kong", img: "https://www.impawards.com/2005/posters/king_kong.jpg" },
+        { title: "Rampage", key: "rampage", img: "https://www.impawards.com/2018/posters/rampage_ver8.jpg" },
+        { title: "The Nun", key: "the-nun", img: "https://www.impawards.com/2018/posters/nun.jpg" },
+        { title: "The Good Nurse", key: "the-good-nurse", img: "https://www.movieinsider.com/images/p/653078.jpg" },
+        { title: "The Hobbit", key: "hobbit", img: "https://www.impawards.com/2012/posters/hobbit_an_unexpected_journey.jpg" },
+        { title: "A Christmas Carol", key: "a-christmas-carol", img: "https://www.impawards.com/2009/posters/christmas_carol.jpg" },
+        { title: "M3GAN", key: "megan", img: "https://www.impawards.com/2023/posters/m3gan.jpg" },
+        { title: "Inception", key: "inception", img: "https://www.impawards.com/2010/posters/inception.jpg" }
+      ]
+    };
+
+    const container = document.getElementById("moviesContainer");
+    const selector = document.getElementById("genreSelector");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderMovies(type, keyword = "") {
+      container.innerHTML = "";
+      const selected = type === "all" ? [...movies.arabic, ...movies.english] : movies[type];
+      selected
+        .filter(m => m.title.toLowerCase().includes(keyword.toLowerCase()))
+        .forEach(movie => {
+          const div = document.createElement("div");
+          div.className = "movie";
+          div.innerHTML = `
+            <a href="movie-details.html?movie=${encodeURIComponent(movie.key)}">
+              <img src="${movie.img}" alt="${movie.title}" />
+              <div class="movie-title">${movie.title}</div>
+            </a>
+            <button onclick='addToWatchlist(${JSON.stringify(movie)})'>➕ Add to Watchlist</button>
+          `;
+
+          container.appendChild(div);
+        });
+    }
+
+    selector.addEventListener("change", () => renderMovies(selector.value, searchInput.value));
+    searchInput.addEventListener("input", () => renderMovies(selector.value, searchInput.value));
+
+    renderMovies("all");
+
+function addToWatchlist(movie) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("❌ Please login first.");
+    return;
+  }
+
+  const allLists = JSON.parse(localStorage.getItem("watchlists")) || {};
+  const userList = allLists[currentUser.email] || [];
+
+  // منع التكرار
+  if (userList.some(m => m.title === movie.title)) {
+    alert("⚠ This movie is already in your watchlist.");
+    return;
+  }
+
+  userList.push(movie);
+  allLists[currentUser.email] = userList;
+
+  localStorage.setItem("watchlists", JSON.stringify(allLists));
+  alert("✅ Movie added to your watchlist!");
+}
+
+  </script>
+</body>
+</html>

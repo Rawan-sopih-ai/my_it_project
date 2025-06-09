@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movies & Series Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+    <a onclick="showSection('home')">🏠 Home</a>
+    <a href="movies.html">🎞 Movie Gallery</a>
+    <a href="movie-details(1).html">🔍Movie details</a>
+    <a onclick="showSection('genres')">🎬 Genres</a>
+     <a href="reviews.html">⭐ Reviews</a>
+    <a onclick="showSection('compare')">⚖ Compare</a>
+    <a onclick="showSection('trailers')">🎥 Trailers</a>
+    <a onclick="showSection('watchlist')">📌 Watchlist</a>
+    <a onclick="showSection('news')">📰 News</a>
+    <a onclick="showSection('forum')">💬 Forum</a>
+    <a onclick="showSection('subscription')">💎 Subscription</a>
+    <a href="admin_panal.html">🔧 Admin Panel</a>
+    <a onclick="showSection('contact')">📞 Contact</a>
+    <hr style="margin: 10px 0; border-color: #555;">
+    <a onclick="showSection('register')">📝 Register</a>
+    <a onclick="showSection('login')">🔐 Login</a>
+    <a onclick="logout()">🚪 Logout</a>
+
+
+  </div>
+  
+  <!-- Topbar -->
+  <div class="topbar">
+    <span class="openbtn" onclick="toggleSidebar()">☰ </span>
+    <h1>Movies & Series Hub</h1>
+    <span id="user-greeting" style="margin-left:auto; color: #F5C518; font-weight:bold;"></span>
+  </div>
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+
+    
+    
+  <section id="home" class="section active">
+
+    <!-- Logo & Banner -->
+    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 20px;">
+      <img src="pictures/580a7324842216f1d2654c4acd3ae541.jpg" alt="Logo" style="height: 50px;" />
+      <h1 style="color: #F5C518; margin: 0;">MovieZone</h1>
+    </div>
+  
+    <!-- Banner -->
+    <div class="banner" style="background: #F5C518; color: black; padding: 1rem; text-align: center; border-radius: 10px; margin: 20px;">
+      <h2 style="margin: 0;">Discover the Latest and Greatest in Movies & Series 🎬</h2>
+    </div>
+  
+    <!-- Featured Movies -->
+    <h3 style="margin: 30px 20px 10px; color: #F5C518;">🎯 Featured Movies</h3>
+    <div class="movie-grid" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 0 20px;">
+      
+      <div class="movie-card" style="width: 180px; text-align: center;">
+        <a href="https://youtu.be/r2_eU44GeIg?si=hbDiShPivdX-IfzE" target="_blank">
+          <img src="pictures/WhatsApp Image 2025-04-24 at 22.53.05_09f4d348.jpg" alt="Omar & Salma 3"
+               style="width: 100%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.3s;"
+               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
+        <p style="margin-top: 10px;">Omar & Salma 3</p>
+      </div>
+  
+      <div class="movie-card" style="width: 180px; text-align: center;">
+        <a href="https://youtu.be/hSZvUFoCgH8?si=rxQDGPuD3qkCTnNd" target="_blank">
+          <img src="pictures/WhatsApp Image 2025-04-24 at 22.53.05_9d77763b.jpg" alt="6 Days"
+               style="width: 100%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.3s;"
+               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
+        <p style="margin-top: 10px;">6 Days</p>
+      </div>
+  
+      <div class="movie-card" style="width: 180px; text-align: center;">
+        <a href="https://youtu.be/dvz_tgqU_OA?si=U-2wtiekjvajn47Z" target="_blank">
+          <img src="pictures/WhatsApp Image 2025-04-24 at 23.09.37_3ec3f03b.jpg" alt="Christmas Carol"
+               style="width: 100%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.3s;"
+               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
+        <p style="margin-top: 10px;">Christmas Carol</p>
+      </div>
+  
+      <div class="movie-card" style="width: 180px; text-align: center;">
+        <a href="https://youtu.be/BRb4U99OU80?si=_G-zWrxE_6q8MGLO" target="_blank">
+          <img src="pictures/WhatsApp Image 2025-04-24 at 23.09.37_be01f981.jpg" alt="M3GAN"
+               style="width: 100%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.3s;"
+               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
+        <p style="margin-top: 10px;">M3GAN</p>
+      </div>
+      
+    </div>
+  </section>
+  
+  
+  <!-- Register Section -->
+  <section id="register" class="section">
+    <h2>📝 Register Now</h2>
+    <form class="form-section" onsubmit="return validateForm()">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+  
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
+  
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+  
+      <label for="confirm">Confirm Password:</label>
+      <input type="password" id="confirm" name="confirm" required>
+  
+      <button type="submit">Register</button>
+    </form>
+  
+    <div id="register-msg" class="success-msg"></div>
+
+  
+    <div class="extra-links" style="text-align:center; margin-top:20px;">
+      <p>
+        <a onclick="showSection('login')" style="color:#1e90ff; cursor:pointer;">Already have an account? Login</a>
+      </p>
+    </div>
+  </section>
+  
+  <!-- Login Section -->
+  <section id="login" class="section">
+    <h2>🔐 Login</h2>
+    <form class="form-section" onsubmit="return validateLoginForm()">
+      <label for="login-email">Email Address:</label>
+      <input type="email" id="login-email" name="login-email" required>
+  
+      <label for="login-password">Password:</label>
+      <input type="password" id="login-password" name="login-password" required>
+  
+      <button type="submit">Login</button>
+    </form>
+  
+    <div id="login-msg" class="success-msg"></div>
+
+  
+    <div class="extra-links" style="text-align:center; margin-top:20px;">
+      <p>
+        <a onclick="showSection('register')" style="color:#1e90ff; cursor:pointer;">Don't have an account? Register</a>
+      </p>
+    </div>
+  </section>
+  
+  
+
+    
+
+    <section id="genres" class="section">
+  <h2>Browse by Genre</h2>
+  <div class="movie-grid">
+    <div class="movie-card" onclick="showGenre('Action')">
+      <img src="pictures/action.jpg" alt="Action" />
+      <p>Action</p>
+    </div>
+    <div class="movie-card" onclick="showGenre('Drama')">
+      <img src="pictures/drama.jpg" alt="Drama" />
+      <p>Drama</p>
+    </div>
+    <div class="movie-card" onclick="showGenre('Comedy')">
+      <img src="pictures/comedy.jpg" alt="Comedy" />
+      <p>Comedy</p>
+    </div>
+    <div class="movie-card" onclick="showGenre('Thriller')">
+      <img src="pictures/thriller.jpeg" alt="Thriller" />
+      <p>Thriller</p>
+    </div>
+    <div class="movie-card" onclick="showGenre('Fantasy')">
+      <img src="pictures/fantacy.jpeg" alt="Fantasy" />
+      <p>Fantasy</p>
+    </div>
+    <div class="movie-card" onclick="showGenre('Social')">
+      <img src="pictures/socialjpg.jpg" alt="Social" />
+      <p>Social</p>
+    </div>
+    <div class="movie-card" onclick="showGenre('Sports')">
+      <img src="pictures/sports.webp" alt="Sports" />
+      <p>Sports</p>
+    </div>
+  </div>
+
+  <!-- المكان اللي هيظهر فيه أفلام التصنيف المختار -->
+  <div id="genreMoviesContainer" class="movie-grid" style="margin-top: 30px;"></div>
+</section>
+
+          
+
+ 
+<!--compare section-->
+<section id="compare" class="section">
+    <h2>Compare Movies & TV Shows</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>eldashash</th>
+          <th>bahebak</th>
+          <th>amr&salma3</th>
+          <th>6days</th>
+          <th>christmas_carol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Rating</td>
+          <td>8.5</td>
+          <td>6.5</td>
+          <td>8.0</td>
+          <td>7.5</td>
+          <td>8.5</td>
+          
+        </tr>
+        <tr>
+          <td>Release Year</td>
+          <td>2023</td>
+          <td>2024</td>
+          <td>2024</td>
+          <td>2012</td>
+          <td>2007</td>
+        </tr>
+        <tr>
+          <td>Genre</td>
+          <td>Action</td>
+          <td>Drama</td>
+          <td>Action</td>
+          <td>romantic</td>
+          <td>comedy</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+
+
+  <section id="trailers" class="trailers-section">
+  <h2>Watch Trailers & Clips</h2>
+  <div class="trailers-container">
+    <!-- Trailer 1: مدرسة الصفا -->
+    <div class="trailer-box">
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/8OZfam3Dv70" 
+              title="Safa School Movie Trailer" frameborder="0" allowfullscreen></iframe>
+      <p>Safa School Movie</p>
+    </div>
+
+    <!-- Trailer 2 -->
+    <div class="trailer-box">
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/hSZvUFoCgH8" 
+              title="6 days movie trailer" frameborder="0" allowfullscreen></iframe>
+      <p>6 days movie</p>
+    </div>
+  </div>
+</section>
+
+<section id="watchlist" class="section">
+  <h2>Your Personalized Watchlist</h2>
+  <div id="watchlistContainer" class="movie-grid"></div>
+</section>
+
+  
+
+
+  <!-- News Section -->
+<section id="news" class="section">
+  <header>
+    <h1>News & Updates About Upcoming Releases</h1>
+  </header>
+
+  <div class="news-container">
+    <div class="news-grid">
+
+      <!-- كارت خبر 1 -->
+      <div class="news-item">
+        <h3>Al-Safa Girls' High School Movie</h3>
+        <p><span>Genre:</span> Comedy</p>
+        <p><span>Duration:</span> 105 minutes</p>
+        <p><span>Release Date:</span> March 30, 2025</p>
+        <p><span>Stars:</span> Mohamed Tharwat, Mohamed Osama</p>
+        <p><span>Language:</span> Arabic</p>
+        <p>
+          The story takes place inside Al-Safa Girls' High School, where an ambitious teacher
+          faces humorous challenges as he adapts to his new environment.
+        </p>
+      </div>
+
+      <!-- ممكن تكرري الكارت ده بأخبار تانية بنفس التنسيق -->
+
+    </div>
+
+    <button id="back-button" onclick="showSection('home')">Back to Home</button>
+  </div>
+</section>
+
+
+
+  <!-- Forum Section -->
+<section id="forum" class="forum-section">
+  <h2>Discussion Forum</h2>
+
+  <form class="form-section" onsubmit="postTopic(event)">
+    <input type="text" id="topic-title" placeholder="Topic Title" required>
+    <textarea id="topic-body" placeholder="Write your topic here..." rows="4" required></textarea>
+    <button type="submit">Post Topic</button>
+  </form>
+
+  <div id="posts-container" class="posts-container"></div>
+</section>
+  
+
+  <!-- Subscription Section -->
+<section id="subscription" class="section">
+    <h2>Subscription Plans</h2>
+    <div class="plans">
+      <div class="plan">
+        <h3>Basic Plan</h3>
+        <p>Access to basic movies and series.</p>
+        <p>Price: $3/month</p>
+        <button>Subscribe Now</button>
+      </div>
+      <div class="plan">
+        <h3>Premium Plan</h3>
+        <p>Exclusive content and extra features.</p>
+        <p>Price: $5/month</p>
+        <button>Subscribe Now</button>
+      </div>
+      <div class="plan">
+        <h3>Deluxe Plan</h3>
+        <p>All latest movies + exclusive content.</p>
+        <p>Price: $7/month</p>
+        <button>Subscribe Now</button>
+      </div>
+    </div>
+        <section class="plans-section">
+      <h2>Choose Your Plan</h2>
+      <table class="plans-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Plan 1</th>
+            <th>Plan 2</th>
+            <th>Plan 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Movies per Month</td>
+            <td>10</td>
+            <td>Unlimited</td>
+            <td>Unlimited + Exclusive</td>
+          </tr>
+          <tr>
+            <td>Streaming Quality</td>
+            <td>HD</td>
+            <td>Full HD</td>
+            <td>4K Ultra HD</td>
+          </tr>
+          <tr>
+            <td>Download Available</td>
+            <td>❌</td>
+            <td>✅</td>
+            <td>✅</td>
+          </tr>
+          <tr>
+            <td>Customer Support</td>
+            <td>❌</td>
+            <td>✅ Basic</td>
+            <td>✅ Premium</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </section>
+
+
+ 
+
+  
+<!-- Contact Us Section -->
+<section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form class="form-section">
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+      <textarea placeholder="Your Message" rows="4"></textarea>
+      <button>Send Message</button>
+    </form>
+  </section>
+  
+  
+  </div>
+  <script src="script.js"></script>
+  </body>
+  </html>

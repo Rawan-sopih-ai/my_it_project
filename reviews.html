@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Ratings</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #F5C518;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .movie {
+      background-color: #222;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 10px;
+    }
+
+    .movie-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stars {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .star {
+      width: 40px;
+      height: 40px;
+      background-color: white;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .star.selected {
+      background-color: #FFCC00;
+    }
+
+    .star:hover {
+      background-color: #FF9900;
+    }
+
+    .comment-box textarea {
+      width: 100%;
+      height: 60px;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: none;
+      resize: none;
+    }
+
+    .comment-box button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #F5C518;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .comment-list {
+      margin-top: 0.5rem;
+      background-color: #444;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+
+    .comment-item {
+      background-color: #555;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="movie" data-movie-id="sons-of-anarchy">
+    <div class="movie-title">Sons of Anarchy</div>
+    <div class="stars"></div>
+    <div class="comment-box">
+      <textarea placeholder="Write your comment..."></textarea>
+      <button>Submit</button>
+      <div class="comment-list"></div>
+    </div>
+  </div>
+
+  <div class="movie" data-movie-id="prison-break">
+    <div class="movie-title">Prison Break</div>
+    <div class="stars"></div>
+    <div class="comment-box">
+      <textarea placeholder="Write your comment..."></textarea>
+      <button>Submit</button>
+      <div class="comment-list"></div>
+    </div>
+  </div>
+
+  <div class="movie" data-movie-id="peaky-blinders">
+    <div class="movie-title">Peaky Blinders</div>
+    <div class="stars"></div>
+    <div class="comment-box">
+      <textarea placeholder="Write your comment..."></textarea>
+      <button>Submit</button>
+      <div class="comment-list"></div>
+    </div>
+  </div>
+
+  <div class="movie" data-movie-id="lucifer">
+    <div class="movie-title">Lucifer</div>
+    <div class="stars"></div>
+    <div class="comment-box">
+      <textarea placeholder="Write your comment..."></textarea>
+      <button>Submit</button>
+      <div class="comment-list"></div>
+    </div>
+  </div>
+
+  <div class="movie" data-movie-id="la-casa-de-papel">
+    <div class="movie-title">La Casa de Papel</div>
+    <div class="stars"></div>
+    <div class="comment-box">
+      <textarea placeholder="Write your comment..."></textarea>
+      <button>Submit</button>
+      <div class="comment-list"></div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.movie').forEach(movie => {
+      const movieId = movie.dataset.movieId;
+      const starsContainer = movie.querySelector('.stars');
+      const commentBox = movie.querySelector('textarea');
+      const commentButton = movie.querySelector('button');
+      const commentList = movie.querySelector('.comment-list');
+
+      // إنشاء النجوم وتسجيل الحدث
+      for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.addEventListener('click', () => {
+          const allStars = starsContainer.querySelectorAll('.star');
+          allStars.forEach((s, index) => {
+            s.classList.toggle('selected', index < i);
+          });
+          localStorage.setItem(`rating-${movieId}`, i);
+        });
+        starsContainer.appendChild(star);
+      }
+
+      // تحميل التقييم المخزن
+      const savedRating = localStorage.getItem(`rating-${movieId}`);
+      if (savedRating) {
+        const allStars = starsContainer.querySelectorAll('.star');
+        allStars.forEach((s, index) => {
+          s.classList.toggle('selected', index < savedRating);
+        });
+      }
+
+      // تحميل التعليقات المخزنة
+      const savedComments = localStorage.getItem(`comments-${movieId}`);
+      if (savedComments) {
+        JSON.parse(savedComments).forEach(comment => {
+          const item = document.createElement('div');
+          item.className = 'comment-item';
+          item.textContent = comment;
+          commentList.appendChild(item);
+        });
+      }
+
+      // إرسال تعليق جديد
+      commentButton.addEventListener('click', () => {
+        const text = commentBox.value.trim();
+        if (text) {
+          const item = document.createElement('div');
+          item.className = 'comment-item';
+          item.textContent = text;
+          commentList.appendChild(item);
+
+          let comments = localStorage.getItem(`comments-${movieId}`);
+          comments = comments ? JSON.parse(comments) : [];
+          comments.push(text);
+          localStorage.setItem(`comments-${movieId}`, JSON.stringify(comments));
+
+          commentBox.value = '';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Details</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #F5C518;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .movie-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .movie-header img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .movie-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .movie-description {
+      color: white;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #F5C518;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="movieContainer"></div>
+
+  <script>
+    const moviesData = {
+  "el-hareefa": {
+    title: "El Hareefa",
+    image: "https://www.egypttoday.com/siteimages/Larg/202312141129542954.jpg",
+    description: "تُجبر الظروف (ماجد) على ترك حياة الرخاء والانتقال من مدرسته الخاصة إلى مدرسة حكومية، فيكتسب بمرور الوقت احترام زملائه بسبب مهارته الكبيرة في كرة القدم؛ فينضم إلى فريق المدرسة في مسابقة على أمل الفوز بجائزة كبرى.",
+    duration: "120 دقيقة",
+    link: "https://www.youtube.com/watch?v=57kee8VUfS8"
+  },
+  "omar-w-salma": {
+    title: "Amr & Salma",
+    image: "pictures/WhatsApp Image 2025-04-24 at 22.53.05_09f4d348.jpg",
+    description: "عمر وسلمى فيلم مصري من بطولة تامر حسني ومي عز الدين، تدور قصة الفيلم حول عمر وهو شاب يعاني آلام الفراق لأن حبيبته والتي تلعب دورها بالفيلم الفنانة ميس حمدان، ثم يخرج من هذه الحالة عندما يقابل سلمى والتي تقوم بأداء دورها الفنانة مي عز الدين، ثم تتطور القصة وتحدث بينهما مشاكل إلا أن العلاقة تتطور بشكل ملحوظ إلى أن تصل للزواج.",
+    duration: "100 دقيقة",
+    link: "https://www.youtube.com/watch?v=Vy87g2bzI4o"
+  },
+  "el-dashash": {
+    title: "El Dashash",
+    image: "pictures/WhatsApp Image 2025-04-24 at 22.53.05_2dd97a2c.jpg",
+    description: "فيلم مصري يدور حول شخص خارج عن القانون يواجه العديد من التحديات والصراعات في حياته، مما يدفعه إلى البحث عن فرصة جديدة للتغيير.",
+    duration: "110 دقيقة",
+    link: "https://www.youtube.com/watch?v=od2fDLf96tU"
+  },
+  "bahebak": {
+    title: "Bahebak",
+    image: "pictures/WhatsApp Image 2025-05-07 at 04.15.28_e55f91e0.jpg",
+    description: "فيلم مصري رومانسي من بطولة تامر حسني، يتناول قصة حب مليئة بالمشاعر والتحديات.",
+    duration: "120 دقيقة",
+    link: "https://www.youtube.com/watch?v=nR3XavrGmhE"
+  },
+  "few-hours": {
+    title: "Few Hours",
+    image: "pictures/WhatsApp Image 2025-04-24 at 22.53.06_67593b05.jpg",
+    description: "فيلم مصري يتناول مجموعة من القصص الرومانسية التي تحدث خلال بضع ساعات في يوم واحد، حيث تتقاطع حياة الشخصيات في لحظة واحدة.",
+    duration: "100 دقيقة",
+    link: "https://elcinema.com/en/video/1026976/"
+  },
+  "yacoubian-building": {
+    title: "The Yacoubian Building",
+    image: "pictures/WhatsApp Image 2025-05-07 at 04.15.28_de7ae8f8.jpg",
+    description: "فيلم مصري درامي يستعرض حياة سكان عمارة يعقوبيان الشهيرة في وسط القاهرة، حيث تتشابك قصصهم في إطار اجتماعي وسياسي.",
+    duration: "165 دقيقة",
+    link: "https://www.youtube.com/watch?v=Q4PHTUM9o9s"
+  },
+  "terrorism-and-kebab": {
+    title: "Terrorism and Kebab",
+    image: "pictures/WhatsApp Image 2025-05-07 at 04.15.28_3cd0be0f.jpg",
+    description: "فيلم كوميدي مصري بطولة عادل إمام، تدور أحداثه حول موظف بسيط يجد نفسه في مواجهة مع النظام بسبب سوء الخدمات الحكومية، مما يؤدي إلى سلسلة من الأحداث الكوميدية الساخرة.",
+    duration: "120 دقيقة",
+    link: "https://www.youtube.com/watch?v=8v9Xx5rW0n8"
+  },
+  "king-kong": {
+    title: "King Kong",
+    image: "https://www.impawards.com/2005/posters/king_kong.jpg",
+    description: "An exploratory crew goes to the Skull Island to shoot a movie, to discover there are very amazing and huge creatures, starting with giant dinosaurs and reptiles until they see a giant smart gorilla that he called (Kong), and (Kong) admires the blond actress (Ann Daru) who has traveled in this campaign, luring him into a trap and captivating him and bringing him to America to show the theater.",
+    duration: "200 minutes",
+    link: "https://www.youtube.com/watch?v=1TSidCNA7mQ"
+  },
+  "rampage": {
+    title: "Rampage",
+    image: "https://www.impawards.com/2018/posters/rampage_ver8.jpg",
+    description: "فيلم أكشن وخيال علمي يدور حول عالم يحاول إنقاذ الحيوانات التي تحولت إلى مخلوقات ضخمة وخطيرة بسبب تجربة جينية.",
+    duration: "107 دقيقة",
+    link: "https://www.youtube.com/watch?v=coOKvrsmQiI"
+  },
+  "the-nun": {
+    title: "The Nun",
+    image: "https://www.impawards.com/2018/posters/nun.jpg",
+    description: "In mysterious circumstances, a young nun commits suicide in a monastery of Romania, and after this incident, a priest who has a dark past by the Vatican with a trainee in the monastic corps is sent to investigate the incident, where they reveal a dark secret there, and it becomes in the face of the nun, Falac with a demonic being, and the things turn into a battlefield between two unequal powers.",
+    duration: "200 minutes",
+    link: "https://www.youtube.com/watch?v=pzD9zGcUNrw"
+  },
+  "the-good-nurse": {
+    title: "The Good Nurse",
+    image: "https://www.movieinsider.com/images/p/653078.jpg",
+    description: "Amy, a good nurse and a single mother who suffers from a serious heart disease that threatens her life, lives routinely until she meets with her colleague Charlie who changes her concepts in life, but when the latter is involved in many hospital deaths, Amy becomes risking everything to save him.",
+    duration: "200 minutes",
+    link: "https://www.youtube.com/watch?v=e0DQevX-GZs"
+  },
+  "hobbit": {
+    title: "The Hobbit",
+    image: "https://www.impawards.com/2012/posters/hobbit_an_unexpected_journey.jpg",
+    description: "A fantasy adventure about Bilbo Baggins, a hobbit who joins a group of dwarves and a wizard on a quest to reclaim their homeland from the dragon Smaug.",
+    duration: "169 minutes",
+    link: "https://www.youtube.com/watch?v=SDnYMbYB-nU"
+  },
+  "a-christmas-carol": {
+    title: "A Christmas Carol",
+    image: "https://www.impawards.com/2009/posters/christmas_carol.jpg",
+    description: "قصة كلاسيكية عن البخيل سكرُوج وتغيره في ليلة عيد الميلاد.",
+    duration: "96 دقيقة",
+    link: "https://www.youtube.com/watch?v=i6-RJDJjkEg"
+  },
+  "megan": {
+    title: "M3GAN",
+    image: "https://www.impawards.com/2023/posters/m3gan.jpg",
+    description: "A sci-fi horror film about a robotic doll designed to protect a child, but things take a dark turn when the doll becomes uncontrollable.",
+    duration: "102 minutes",
+    link: "https://www.youtube.com/watch?v=BRb4U99OU80"
+  },
+  "inception": {
+    title: "Inception",
+    image: "https://www.impawards.com/2010/posters/inception.jpg",
+    description: "A skilled thief (Leonardo DiCaprio) who steals information by infiltrating dreams is recruited by a businessman to plant an idea in the mind of a competitor. The idea is for the man to dismantle his father's companies that he will inherit.",
+    duration: "148 minutes",
+    link: "https://www.youtube.com/watch?v=LifqWf0BAOA"
+  }
+};
+
+
+    function getMovieKeyFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("movie");
+    }
+
+    function showMovieDetails() {
+      const key = getMovieKeyFromURL();
+      const movie = moviesData[key];
+
+      const container = document.getElementById("movieContainer");
+
+      if (movie) {
+        container.innerHTML = `
+          <div class="movie-header">
+            <img src="${movie.image}" alt="${movie.title}" />
+            <div class="movie-title">${movie.title}</div>
+            <p class="movie-description">${movie.description}</p>
+            <p class="movie-description">${movie.duration}</p>
+            <p><a href="${movie.link}" target="_blank" style="color: blue;">for watching the movie press here</a></p> <!-- ✅ صح -->
+
+            <a class="back-link" href="gallery.html">← Back to Gallery</a>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <p style="text-align:center; color: white;">Movie not found. <a class="back-link" href="gallery.html">Back to Gallery</a></p>
+        `;
+      }
+    }
+
+    showMovieDetails();
+  </script>
+</body>
+</html>

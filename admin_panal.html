@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Movie Moderation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --primary-color: #0d6efd;
+    --primary-dark: #0b5ed7;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #f1f1f1;
+    --border-color: #333;
+    --success-color: #28a745;
+    --hover-color: #2a2a2a;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--hover-color);
+    color: var(--text-color);
+  }
+
+  button {
+    padding: 12px 25px;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--primary-dark);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .navbar {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+  }
+
+  .panel-section {
+    margin: 30px auto;
+    padding: 25px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    max-width: 900px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .panel-section h2 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    color: var(--text-color);
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+  }
+
+  .data-table th {
+    background-color: #2c2c2c;
+    color: var(--primary-color);
+  }
+
+  .action-btn {
+    margin-right: 8px;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .action-btn:hover {
+    background-color: var(--primary-dark);
+  }
+
+  .action-btn:disabled {
+    background-color: var(--success-color);
+    cursor: default;
+  }
+
+  .reply-input {
+    margin-top: 8px;
+    padding: 8px;
+    width: 80%;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--hover-color);
+    color: var(--text-color);
+  }
+</style>
+
+</head>
+<body>
+  <div id="login-section" class="container">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="admin-panel" class="hidden">
+    <nav class="navbar">
+      <h1>Admin Panel</h1>
+    </nav>
+
+    <section class="panel-section">
+      <h2>Movies</h2>
+      <table class="data-table">
+        <tr><th>Title</th><th>Actions</th></tr>
+        <tr>
+          <td>Sample Movie 1</td>
+          <td>
+            <button class="action-btn">Edit</button>
+            <button class="action-btn">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="panel-section">
+      <h2>User Reviews</h2>
+      <table class="data-table">
+        <tr><th>Review</th><th>Actions</th></tr>
+        <tr>
+          <td>Great movie!</td>
+          <td><button class="action-btn" onclick="approveReview(this)">Approve</button></td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="panel-section">
+      <h2>Complaints</h2>
+      <table class="data-table">
+        <tr><th>Complaint</th><th>Actions</th></tr>
+        <tr>
+          <td>Offensive content</td>
+          <td>
+            <button class="action-btn" onclick="showReply(this)">Reply</button>
+            <input type="text" class="hidden reply-input" placeholder="Type your reply">
+          </td>
+        </tr>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (user === 'sara' && pass === 'admin') {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('admin-panel').classList.remove('hidden');
+      } else {
+        alert('Invalid credentials');
+      }
+    }
+
+    function approveReview(btn) {
+      btn.textContent = 'Approved';
+      btn.disabled = true;
+    }
+
+    function showReply(btn) {
+      const input = btn.nextElementSibling;
+      input.classList.remove('hidden');
+      input.focus();
+    }
+  </script>
+</body>
+</html>
